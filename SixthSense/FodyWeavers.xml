@@ -5,6 +5,7 @@
 			deniszykov.WebSocketListener
 			Buttplug
 			Buttplug.Client.Connectors.WebsocketConnector
+			Newtonsoft.Json
 	</IncludeAssemblies>
   </Costura>
 </Weavers>
