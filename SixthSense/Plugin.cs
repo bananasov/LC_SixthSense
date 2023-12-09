@@ -60,6 +60,7 @@ namespace SixthSense
                         if (Vector3.Dot(forward, toOther) < 0 && distance <= Config.DetectionRange.Value)
                         {
                             SixthSense.Log.LogInfo("OwO theres a boi behind me >.<");
+                            SixthSense.DeviceManager.VibrateConnectedDevices(0.1, 0.1f);
                         }
                     }
                 }
