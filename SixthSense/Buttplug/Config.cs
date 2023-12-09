@@ -9,6 +9,7 @@ namespace SixthSense.Buttplug
 
         internal static ConfigEntry<string> ServerUri { get; set; }
 
+        internal static ConfigEntry<float> DetectionRange { get; set; }
 
         static Config()
         {
@@ -20,6 +21,8 @@ namespace SixthSense.Buttplug
                 "ws://localhost:12345",
                 "URI of the Intiface server."
             );
+
+            DetectionRange = ConfigFile.Bind("Vibrations", "DetectionRange", 50.0f, "How close the enemy has to be to vibrate");
         }
     }
 }
