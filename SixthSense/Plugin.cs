@@ -38,15 +38,29 @@ namespace SixthSense
 
         void Update()
         {
+            if (!SixthSense.DeviceManager.IsConnected()) return;
+
             if (GameNetworkManager.Instance != null && GameNetworkManager.Instance.localPlayerController != null && StartOfRound.Instance != null)
             {
+                var localPlayerController = GameNetworkManager.Instance.localPlayerController;
+
                 if (StartOfRound.Instance.shipHasLanded)
                 {
                     var level = StartOfRound.Instance.currentLevel;
 
                     foreach (var enemy in level.Enemies)
                     {
-                        SixthSense.Log.LogInfo($"{enemy.enemyType.enemyName}");
+                        var enemyPrefab = enemy.enemyType.enemyPrefab;
+
+                        Vector3 forward = localPlayerController.transform.TransformDirection(Vector3.forward);
+                        Vector3 toOther = enemyPrefab.transform.position - localPlayerController.transform.position;
+
+                        float distance = Vector3.Distance(localPlayerController.transform.position, enemyPrefab.transform.position);
+
+                        if (Vector3.Dot(forward, toOther) < 0 && distance <= Config.DetectionRange.Value)
+                        {
+                            SixthSense.Log.LogInfo("OwO theres a boi behind me >.<");
+                        }
                     }
                 }
             }
