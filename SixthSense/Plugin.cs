@@ -51,13 +51,9 @@ namespace SixthSense
                     foreach (var enemy in level.Enemies)
                     {
                         var enemyPrefab = enemy.enemyType.enemyPrefab;
-
-                        Vector3 forward = localPlayerController.transform.TransformDirection(Vector3.forward);
-                        Vector3 toOther = enemyPrefab.transform.position - localPlayerController.transform.position;
-
                         float distance = Vector3.Distance(localPlayerController.transform.position, enemyPrefab.transform.position);
 
-                        if (Vector3.Dot(forward, toOther) < 0 && distance <= Config.DetectionRange.Value)
+                        if (distance <= Config.DetectionRange.Value)
                         {
                             SixthSense.Log.LogInfo("OwO theres a boi behind me >.<");
                             SixthSense.DeviceManager.VibrateConnectedDevices(0.1, 0.1f);
