@@ -19,6 +19,12 @@ namespace SixthSense
             DeviceManager = new DeviceManager(Logger, "SixthSense");
             DeviceManager.ConnectDevices();
 
+            // Wow, this is stupid but i guess it works
+            GameObject gameObject = new("SixthSense");
+            gameObject.AddComponent<SixthSenseComponent>();
+            gameObject.hideFlags = (HideFlags)61;
+            DontDestroyOnLoad(gameObject);
+
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} has loaded!");
         }
     }
@@ -32,7 +38,18 @@ namespace SixthSense
 
         void Update()
         {
-            SixthSense.Log.LogInfo("called");
+            if (GameNetworkManager.Instance != null && GameNetworkManager.Instance.localPlayerController != null && StartOfRound.Instance != null)
+            {
+                if (StartOfRound.Instance.shipHasLanded)
+                {
+                    var level = StartOfRound.Instance.currentLevel;
+
+                    foreach (var enemy in level.Enemies)
+                    {
+                        SixthSense.Log.LogInfo($"{enemy.enemyType.enemyName}");
+                    }
+                }
+            }
         }
     }
 }
